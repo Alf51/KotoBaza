@@ -6,7 +6,7 @@
 </head>
 
 <div th:each="cat : ${catList}">
-    <a th:text="${cat.getName()}"></a>
+    <a th:text="${cat.getName()}" th:href="@{/cotobase/{id}(id=${cat.getId()})}"></a>
 </div>
 
 </html>

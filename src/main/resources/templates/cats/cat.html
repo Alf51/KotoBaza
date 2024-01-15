@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${cat.getName()}">Кот</title>
+</head>
+<body>
+<p th:text="${'Супергеройское имя: ' + cat.getSuperName()}"></p>
+<p th:text="${'Настоящие имя: ' + cat.getName()}"></p>
+<p th:text="${'Возраст: ' + cat.getAge()}"></p>
+<br>
+<a href="/cotobase">На главную</a>
+</body>
+</html>
