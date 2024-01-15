@@ -30,7 +30,7 @@ public class CatController {
     }
 
     @GetMapping("/{id}")
-    public String getCat(@PathVariable("id") Long id, Model model) {
+    public String getCatPage(@PathVariable("id") Long id, Model model) {
         SuperCat superCat = catService.getSuperCat(id);
         model.addAttribute("cat", superCat);
         return "cats/cat";

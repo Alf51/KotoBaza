@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${city.getName()}">Кот</title>
+</head>
+<body>
+<p th:text="${'Город: ' + city.getName()}"></p>
+<p th:text="${'Население: ' + city.getPopulation()}"></p>
+<br>
+<a href="/cotobase">На главную</a>
+</body>
+</html>

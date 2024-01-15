@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:each="city : ${cityList}">
-    <a th:text="${city.getName()}"></a>
+    <a th:text="${city.getName()}" th:href="@{/cities/{id}(id=${city.getId()})}"></a>
 </div>
 <br>
 <a href="/cotobase">На главную</a>
