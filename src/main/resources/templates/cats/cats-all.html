@@ -8,5 +8,6 @@
 <div th:each="cat : ${catList}">
     <a th:text="${cat.getName()}" th:href="@{/cotobase/{id}(id=${cat.getId()})}"></a>
 </div>
-
+<br>
+<a href="/cotobase">На главную</a>
 </html>
