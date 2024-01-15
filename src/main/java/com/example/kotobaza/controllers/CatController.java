@@ -1,15 +1,30 @@
 package com.example.kotobaza.controllers;
 
+import com.example.kotobaza.modeles.SuperCat;
+import com.example.kotobaza.services.CatService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping("/")
-public class CatController {
+import java.util.List;
 
-    @GetMapping("main")
+@Controller
+@RequestMapping({"/cotobase", "/"})
+@RequiredArgsConstructor
+public class CatController {
+    private final CatService catService;
+
+    @GetMapping
     public String getMainPage() {
         return "main";
+    }
+
+    @GetMapping("/cats-all")
+    public String getAllCatsPage(Model model) {
+        List<SuperCat> catList = catService.getAllSuperCat();
+        model.addAttribute("catList", catList);
+        return "cats/cats-all";
     }
 }

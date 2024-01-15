@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>Котобаза</title>
 </head>
-<body>
-<a href="cotobase/cats-all">Все коты</a>
-<br>
-<a href="cotobase/cities/all">Все города</a>
-</body>
+
+<div th:each="cat : ${catList}">
+    <a th:text="${cat.getName()}"></a>
+</div>
+
 </html>
