@@ -29,4 +29,8 @@ public class CatService {
     public Optional<SuperCat> getSuperCatBySuperName(String superName) {
         return catRepository.findBySuperName(superName);
     }
+
+    public void deleteById(Long id) {
+        catRepository.deleteById(id);
+    }
 }

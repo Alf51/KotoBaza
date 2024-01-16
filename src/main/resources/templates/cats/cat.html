@@ -9,6 +9,14 @@
 <p th:text="${'Настоящие имя: ' + cat.getName()}"></p>
 <p th:text="${'Возраст: ' + cat.getAge()}"></p>
 <br>
+<form th:method="GET" th:action="@{/cotobase/edit/{id}(id=${cat.getId()})}">
+    <input type="submit" value="Редактировать кота">
+</form>
+<br>
+<form th:method="DELETE" th:action="@{/cotobase/{id}(id=${cat.getId()})}">
+    <input type="submit" value="удалить кота">
+</form>
+<br>
 <a href="/cotobase">На главную</a>
 </body>
 </html>

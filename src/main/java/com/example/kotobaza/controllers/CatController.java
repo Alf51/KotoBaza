@@ -42,9 +42,15 @@ public class CatController {
         return "cats/new";
     }
 
+    @GetMapping("/edit/{id}")
+    public String getEditCatPage(@PathVariable("id") Long id, Model model) {
+        SuperCat superCat = catService.getSuperCat(id);
+        model.addAttribute("cat", superCat);
+        return "cats/edit";
+    }
+
     @PostMapping("/new")
     public String saveCat(@ModelAttribute("cat") SuperCat superCat, BindingResult bindingResult) {
-
         catValidator.validate(superCat, bindingResult);
         if (bindingResult.hasErrors()) {
             return "cats/new";
@@ -52,4 +58,22 @@ public class CatController {
         catService.save(superCat);
         return "redirect:/cotobase/cats-all";
     }
+
+    @PatchMapping("/edit/{id}")
+    public String editCat(@ModelAttribute("cat") SuperCat superCat, BindingResult bindingResult) {
+        catValidator.validate(superCat, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "cats/edit";
+        }
+        catService.save(superCat);
+        return "redirect:/cotobase/cats-all";
+    }
+
+    @DeleteMapping("{id}")
+    public String editCat(@PathVariable("id") Long id) {
+        System.out.println();
+        catService.deleteById(id);
+        return "redirect:/cotobase/cats-all";
+    }
+
 }
