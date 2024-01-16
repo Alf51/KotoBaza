@@ -2,6 +2,7 @@ package com.example.kotobaza.services;
 
 import com.example.kotobaza.modeles.SuperCat;
 import com.example.kotobaza.repository.CatRepository;
+import com.example.kotobaza.utils.exeptions.CatException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class CatService {
     }
 
     public SuperCat getSuperCatId(Long id) {
-        return catRepository.findById(id).orElseThrow(() -> new RuntimeException("Кот не найден"));
+        return catRepository.findById(id).orElseThrow(() -> new CatException("Кот не найден"));
     }
 
     public SuperCat save(SuperCat superCat) {

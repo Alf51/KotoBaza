@@ -2,6 +2,7 @@ package com.example.kotobaza.services;
 
 import com.example.kotobaza.modeles.City;
 import com.example.kotobaza.repository.CityRepository;
+import com.example.kotobaza.utils.exeptions.CityException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class CityService {
     }
 
     public City getCityById(Long id) {
-        return cityRepository.findById(id).orElseThrow(() -> new RuntimeException("Город не найден"));
+        return cityRepository.findById(id).orElseThrow(() -> new CityException("Город не найден"));
     }
 
     public City save(City city) {
