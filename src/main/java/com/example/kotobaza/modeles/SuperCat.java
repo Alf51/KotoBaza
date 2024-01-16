@@ -14,10 +14,11 @@ public class SuperCat {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
+    @SequenceGenerator(name="generator", allocationSize = 1, initialValue = 6)
     private Long id;
 
-    @Column(name = "super_name")
+    @Column(name = "super_name", unique = true)
     private String superName;
 
     @Column(name = "name")

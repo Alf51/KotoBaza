@@ -2,12 +2,12 @@ package com.example.kotobaza.controllers;
 
 import com.example.kotobaza.modeles.SuperCat;
 import com.example.kotobaza.services.CatService;
+import com.example.kotobaza.utils.validators.CatValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CatController {
     private final CatService catService;
+    private final CatValidator catValidator;
 
     @GetMapping
     public String getMainPage() {
@@ -34,5 +35,21 @@ public class CatController {
         SuperCat superCat = catService.getSuperCat(id);
         model.addAttribute("cat", superCat);
         return "cats/cat";
+    }
+
+    @GetMapping("/new")
+    public String getCreateCatPage(@ModelAttribute("cat") SuperCat cat) {
+        return "cats/new";
+    }
+
+    @PostMapping("/new")
+    public String saveCat(@ModelAttribute("cat") SuperCat superCat, BindingResult bindingResult) {
+
+        catValidator.validate(superCat, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "cats/new";
+        }
+        catService.save(superCat);
+        return "redirect:/cotobase/cats-all";
     }
 }
