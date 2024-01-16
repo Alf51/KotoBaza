@@ -30,9 +30,6 @@ public class CityService {
     }
 
     public void deleteById(Long id) {
-        System.out.println();
-        City cyte = getCityById(id);
-        System.out.println();
         cityRepository.deleteById(id);
     }
 }

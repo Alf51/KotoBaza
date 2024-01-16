@@ -1,7 +1,6 @@
 package com.example.kotobaza.controllers;
 
 import com.example.kotobaza.modeles.City;
-import com.example.kotobaza.modeles.SuperCat;
 import com.example.kotobaza.services.CityService;
 import com.example.kotobaza.utils.validators.CityValidator;
 import lombok.RequiredArgsConstructor;
@@ -67,7 +66,6 @@ public class CityController {
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable("id") Long id) {
-        System.out.println();
         cityService.deleteById(id);
         return "redirect:/cities/all-cities";
     }
