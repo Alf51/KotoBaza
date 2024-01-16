@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +17,22 @@ public class CityService {
         return cityRepository.findAll();
     }
 
-    public City getCity(Long id) {
+    public City getCityById(Long id) {
         return cityRepository.findById(id).orElseThrow(() -> new RuntimeException("Город не найден"));
+    }
+
+    public City save(City city) {
+        return cityRepository.save(city);
+    }
+
+    public Optional<City> getCityByName(String name) {
+        return cityRepository.findByName(name);
+    }
+
+    public void deleteById(Long id) {
+        System.out.println();
+        City cyte = getCityById(id);
+        System.out.println();
+        cityRepository.deleteById(id);
     }
 }

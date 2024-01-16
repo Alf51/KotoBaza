@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Обновить город</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/cities/edit/{id}(id=${city.getId()})}" th:object="${city}">
+  <label for="name">Введите название города: </label>
+  <input type="text" th:field="*{name}" id="name"/>
+  <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>
+  <br/>
+  <label for="age">Введите число населения города:</label>
+  <input type="number" th:field="*{population}" id="age"/>
+  <div style="color:red" th:if="${#fields.hasErrors('population')}" th:errors="*{population}">rating error</div>
+  <br/>
+  <hr/>
+  <input type="submit" value="Обновить"/>
+  <br>
+</form>
+<br>
+<a href="/cotobase">На главную</a>
+</body>
+</html>

@@ -8,6 +8,14 @@
 <p th:text="${'Город: ' + city.getName()}"></p>
 <p th:text="${'Население: ' + city.getPopulation()}"></p>
 <br>
+<form th:method="GET" th:action="@{/cities/edit/{id}(id=${city.getId()})}">
+    <input type="submit" value="Редактировать город">
+</form>
+<br>
+<form th:method="DELETE" th:action="@{/cities/{id}(id=${city.getId()})}">
+    <input type="submit" value="Снести город">
+</form>
+<br>
 <a href="/cotobase">На главную</a>
 </body>
 </html>

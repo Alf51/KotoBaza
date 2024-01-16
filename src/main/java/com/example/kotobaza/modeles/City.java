@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.List;
 
@@ -26,6 +29,8 @@ public class City {
     @Column(name = "population")
     private int population;
 
-    @OneToMany(mappedBy = "city")
+    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
+    @Lazy
+    @Cascade(value = org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<SuperCat> catList;
 }

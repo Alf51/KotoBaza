@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Создать кота</title>
+    <title>Хорошо отредактировать кота</title>
 </head>
 <body>
 <form th:method="PATCH" th:action="@{/cotobase/edit/{id}(id=${cat.getId()})}" th:object="${cat}">

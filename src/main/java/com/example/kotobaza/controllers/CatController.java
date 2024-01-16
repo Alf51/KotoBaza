@@ -32,7 +32,7 @@ public class CatController {
 
     @GetMapping("/{id}")
     public String getCatPage(@PathVariable("id") Long id, Model model) {
-        SuperCat superCat = catService.getSuperCat(id);
+        SuperCat superCat = catService.getSuperCatId(id);
         model.addAttribute("cat", superCat);
         return "cats/cat";
     }
@@ -44,7 +44,7 @@ public class CatController {
 
     @GetMapping("/edit/{id}")
     public String getEditCatPage(@PathVariable("id") Long id, Model model) {
-        SuperCat superCat = catService.getSuperCat(id);
+        SuperCat superCat = catService.getSuperCatId(id);
         model.addAttribute("cat", superCat);
         return "cats/edit";
     }
@@ -71,7 +71,6 @@ public class CatController {
 
     @DeleteMapping("{id}")
     public String editCat(@PathVariable("id") Long id) {
-        System.out.println();
         catService.deleteById(id);
         return "redirect:/cotobase/cats-all";
     }
