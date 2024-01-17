@@ -8,6 +8,30 @@
 <p th:text="${'Город: ' + city.getName()}"></p>
 <p th:text="${'Население: ' + city.getPopulation()}"></p>
 <br>
+
+<div th:unless="${city.getCatList().isEmpty()}">
+    <label>Город под защитой</label>
+    <option th:each="cat : ${city.getCatList()}" }
+            th:text="${cat.getSuperName()}"></option>
+</div>
+
+<div th:if="${city.getCatList().isEmpty()}">
+    <label>Город никто не защищает</label>
+</div>
+
+<div th:unless="${freeCats.isEmpty()}">
+    <p>Выберете котов для защиты города</p>
+    <form th:method="PATCH" th:action="@{/cities/add/{city_id}(city_id=${city.getId()})}" th:object="${superCat}">
+        <label for="superCat">Выберите супер-кота</label>
+        <select th:object="${superCat}" th:field="*{id}" id="superCat">
+            <option th:each="superCat : ${freeCats}" th:value="${superCat.getId()}"
+                    th:text="${superCat.getSuperName()}"></option>
+        </select>
+        <input type="submit" value="Назначить супер-кота"/>
+    </form>
+</div>
+
+<br>
 <form th:method="GET" th:action="@{/cities/edit/{id}(id=${city.getId()})}">
     <input type="submit" value="Редактировать город">
 </form>

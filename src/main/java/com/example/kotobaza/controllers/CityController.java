@@ -1,6 +1,8 @@
 package com.example.kotobaza.controllers;
 
 import com.example.kotobaza.modeles.City;
+import com.example.kotobaza.modeles.SuperCat;
+import com.example.kotobaza.services.CatService;
 import com.example.kotobaza.services.CityService;
 import com.example.kotobaza.utils.validators.CityValidator;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.List;
 @RequestMapping("/cities")
 public class CityController {
     private final CityService cityService;
+    private final CatService catService;
     private final CityValidator cityValidator;
 
     @GetMapping("/all-cities")
@@ -26,8 +29,10 @@ public class CityController {
     }
 
     @GetMapping("/{id}")
-    public String getCityPage(@PathVariable("id") Long id, Model model) {
+    public String getCityPage(@PathVariable("id") Long id, Model model, @ModelAttribute("superCat") SuperCat superCat ) {
         City city = cityService.getCityById(id);
+        List<SuperCat> freeSuperCats = catService.getFreeSuperCats();
+        model.addAttribute("freeCats", freeSuperCats);
         model.addAttribute("city", city);
         return "cities/city";
     }
@@ -63,6 +68,13 @@ public class CityController {
         cityService.save(city);
         return "redirect:/cities/all-cities";
     }
+
+    @PatchMapping("/add/{cityId}")
+    public String addCat(@PathVariable("cityId") Long cityId, @ModelAttribute("superCat") SuperCat superCat ) {
+        cityService.assignCat(superCat.getId(), cityId);
+        return "redirect:/cities/all-cities";
+    }
+
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable("id") Long id) {

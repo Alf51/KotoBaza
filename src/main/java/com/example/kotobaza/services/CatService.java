@@ -1,7 +1,7 @@
 package com.example.kotobaza.services;
 
 import com.example.kotobaza.modeles.SuperCat;
-import com.example.kotobaza.repository.CatRepository;
+import com.example.kotobaza.repository.SuperCatRepository;
 import com.example.kotobaza.utils.exeptions.CatException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,25 +12,29 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CatService {
-    private final CatRepository catRepository;
+    private final SuperCatRepository superCatRepository;
 
     public List<SuperCat> getAllSuperCat() {
-        return catRepository.findAll();
+        return superCatRepository.findAll();
     }
 
     public SuperCat getSuperCatId(Long id) {
-        return catRepository.findById(id).orElseThrow(() -> new CatException("Кот не найден"));
+        return superCatRepository.findById(id).orElseThrow(() -> new CatException("Кот не найден"));
     }
 
     public SuperCat save(SuperCat superCat) {
-        return catRepository.save(superCat);
+        return superCatRepository.save(superCat);
     }
 
     public Optional<SuperCat> getSuperCatBySuperName(String superName) {
-        return catRepository.findBySuperName(superName);
+        return superCatRepository.findBySuperName(superName);
     }
 
     public void deleteById(Long id) {
-        catRepository.deleteById(id);
+        superCatRepository.deleteById(id);
+    }
+
+    public List<SuperCat> getFreeSuperCats() {
+        return superCatRepository.findSuperCatsByCityIsNull();
     }
 }

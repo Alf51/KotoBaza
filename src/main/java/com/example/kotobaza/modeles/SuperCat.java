@@ -14,8 +14,8 @@ public class SuperCat {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @SequenceGenerator(name="generator", allocationSize = 1, initialValue = 6)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generatorCity")
+    @SequenceGenerator(name = "generatorCity", allocationSize = 1, initialValue = 7)
     private Long id;
 
     @Column(name = "super_name", unique = true)

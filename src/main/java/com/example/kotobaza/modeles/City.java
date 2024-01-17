@@ -20,7 +20,7 @@ public class City {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
-    @SequenceGenerator(name="generator", allocationSize = 1, initialValue = 6)
+    @SequenceGenerator(name="generator", allocationSize = 1, initialValue = 7)
     private Long id;
 
     @Column(name = "name", unique = true)
@@ -31,6 +31,6 @@ public class City {
 
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
     @Lazy
-    @Cascade(value = org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @Cascade(value = org.hibernate.annotations.CascadeType.PERSIST)
     private List<SuperCat> catList;
 }
