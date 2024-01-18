@@ -10,9 +10,7 @@
 <br>
 
 <div th:unless="${city.getCatList().isEmpty()}">
-    <label>Город под защитой</label>
-    <option th:each="cat : ${city.getCatList()}" }
-            th:text="${cat.getSuperName()}"></option>
+    <a th:text="${'Список котов защитников этого города'}" th:href="@{/cities/defense/{id}(id=${city.getId()})}"></a>
 </div>
 
 <div th:if="${city.getCatList().isEmpty()}">
@@ -29,6 +27,10 @@
         </select>
         <input type="submit" value="Назначить супер-кота"/>
     </form>
+</div>
+
+<div th:if="${freeCats.isEmpty()}">
+    <p>Сейчас нет доступных супер-котов, возможно все заняты</p>
 </div>
 
 <br>

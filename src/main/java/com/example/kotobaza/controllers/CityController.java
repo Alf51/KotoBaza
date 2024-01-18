@@ -29,7 +29,7 @@ public class CityController {
     }
 
     @GetMapping("/{id}")
-    public String getCityPage(@PathVariable("id") Long id, Model model, @ModelAttribute("superCat") SuperCat superCat ) {
+    public String getCityPage(@PathVariable("id") Long id, Model model, @ModelAttribute("superCat") SuperCat superCat) {
         City city = cityService.getCityById(id);
         List<SuperCat> freeSuperCats = catService.getFreeSuperCats();
         model.addAttribute("freeCats", freeSuperCats);
@@ -48,6 +48,14 @@ public class CityController {
         model.addAttribute("city", city);
         return "cities/edit";
     }
+
+    @GetMapping("/defense/{id}")
+    public String getCatsOnDefenseCity(@PathVariable("id") Long id, @ModelAttribute("superCat") SuperCat superCat, Model model) {
+        City city = cityService.getCityById(id);
+        model.addAttribute("city", city);
+        return "cats/cats-on-defence-city";
+    }
+
 
     @PostMapping("/new")
     public String saveCity(@ModelAttribute("city") City city, BindingResult bindingResult) {
@@ -70,11 +78,16 @@ public class CityController {
     }
 
     @PatchMapping("/add/{cityId}")
-    public String addCat(@PathVariable("cityId") Long cityId, @ModelAttribute("superCat") SuperCat superCat ) {
+    public String addCat(@PathVariable("cityId") Long cityId, @ModelAttribute("superCat") SuperCat superCat) {
         cityService.assignCat(superCat.getId(), cityId);
         return "redirect:/cities/all-cities";
     }
 
+    @PatchMapping("/releaseСat/{cityId}")
+    public String releaseCat(@PathVariable("cityId") Long cityId, @ModelAttribute("superCat") SuperCat superCat) {
+        cityService.releaseCat(superCat.getId(), cityId);
+        return "redirect:/cities/all-cities";
+    }
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable("id") Long id) {

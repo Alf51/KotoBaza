@@ -47,4 +47,16 @@ public class CityService {
         superCat.setCity(city);
         System.out.println();
     }
+
+    @Transactional
+    public void releaseCat(Long catId, Long CityId) {
+        SuperCat superCat = catService.getSuperCatId(catId);
+        City city = getCityById(CityId);
+        List<SuperCat> superCatList = city.getCatList();
+        superCatList.remove(superCat);
+        List<SuperCat> newCatList = new ArrayList<>(superCatList);
+        city.setCatList(newCatList);
+        superCat.setCity(null);
+        System.out.println();
+    }
 }
