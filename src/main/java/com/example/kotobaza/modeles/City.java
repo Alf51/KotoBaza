@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
 import org.springframework.context.annotation.Lazy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,4 +33,20 @@ public class City {
     @Lazy
     @Cascade(value = org.hibernate.annotations.CascadeType.PERSIST)
     private List<SuperCat> catList;
+
+    public void addSuperCatInList(SuperCat superCat) {
+        if (this.catList == null) {
+            this.catList  = new ArrayList<>();
+        }
+        catList.add(superCat);
+        superCat.setCity(this);
+    }
+
+    public void releaseSuperCatInList(SuperCat superCat) {
+        if (this.catList == null) {
+            return;
+        }
+        catList.remove(superCat);
+        superCat.setCity(null);
+    }
 }

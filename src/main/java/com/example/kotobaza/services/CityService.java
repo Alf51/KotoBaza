@@ -37,26 +37,16 @@ public class CityService {
     }
 
     @Transactional
-    public void assignCat(Long catId, Long CityId) {
+    public void assignSuperCat(Long catId, Long CityId) {
         SuperCat superCat = catService.getSuperCatId(catId);
         City city = getCityById(CityId);
-        List<SuperCat> superCatList = city.getCatList();
-        List<SuperCat> newCatList = new ArrayList<>(superCatList);
-        newCatList.add(superCat);
-        city.setCatList(newCatList);
-        superCat.setCity(city);
-        System.out.println();
+        city.addSuperCatInList(superCat);
     }
 
     @Transactional
-    public void releaseCat(Long catId, Long CityId) {
+    public void releaseSuperCatCat(Long catId, Long CityId) {
         SuperCat superCat = catService.getSuperCatId(catId);
         City city = getCityById(CityId);
-        List<SuperCat> superCatList = city.getCatList();
-        superCatList.remove(superCat);
-        List<SuperCat> newCatList = new ArrayList<>(superCatList);
-        city.setCatList(newCatList);
-        superCat.setCity(null);
-        System.out.println();
+        city.releaseSuperCatInList(superCat);
     }
 }

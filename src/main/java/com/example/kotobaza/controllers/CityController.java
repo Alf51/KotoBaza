@@ -79,13 +79,13 @@ public class CityController {
 
     @PatchMapping("/add/{cityId}")
     public String addCat(@PathVariable("cityId") Long cityId, @ModelAttribute("superCat") SuperCat superCat) {
-        cityService.assignCat(superCat.getId(), cityId);
+        cityService.assignSuperCat(superCat.getId(), cityId);
         return "redirect:/cities/all-cities";
     }
 
     @PatchMapping("/releaseСat/{cityId}")
     public String releaseCat(@PathVariable("cityId") Long cityId, @ModelAttribute("superCat") SuperCat superCat) {
-        cityService.releaseCat(superCat.getId(), cityId);
+        cityService.releaseSuperCatCat(superCat.getId(), cityId);
         return "redirect:/cities/all-cities";
     }
 
