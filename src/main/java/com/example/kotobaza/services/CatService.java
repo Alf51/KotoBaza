@@ -5,6 +5,9 @@ import com.example.kotobaza.repository.SuperCatRepository;
 import com.example.kotobaza.utils.exeptions.CatException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.MapBindingResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +26,8 @@ public class CatService {
     }
 
     public SuperCat save(SuperCat superCat) {
+
+
         return superCatRepository.save(superCat);
     }
 
