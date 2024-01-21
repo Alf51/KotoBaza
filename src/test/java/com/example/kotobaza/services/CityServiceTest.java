@@ -3,6 +3,7 @@ package com.example.kotobaza.services;
 import com.example.kotobaza.modeles.City;
 import com.example.kotobaza.modeles.SuperCat;
 import com.example.kotobaza.repository.CityRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,7 +27,8 @@ class CityServiceTest {
     private CityService cityService;
 
     @Test
-    void assignSuperCat_shouldAssignCatInCity() {
+    @DisplayName("должен добавить кота в конкретный город")
+    void assignSuperCat_shouldAddSuperCatInCity() {
         Long catId = 1L;
         Long cityId = 1L;
         SuperCat superCat = getSuperCat();
