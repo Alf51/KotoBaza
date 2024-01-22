@@ -32,21 +32,21 @@ public class City {
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
     @Lazy
     @Cascade(value = org.hibernate.annotations.CascadeType.PERSIST)
-    private List<SuperCat> catList;
+    private List<SuperCat> cats;
 
     public void addSuperCatInList(SuperCat superCat) {
-        if (this.catList == null) {
-            this.catList  = new ArrayList<>();
+        if (this.cats == null) {
+            this.cats = new ArrayList<>();
         }
-        catList.add(superCat);
+        cats.add(superCat);
         superCat.setCity(this);
     }
 
     public void releaseSuperCatInList(SuperCat superCat) {
-        if (this.catList == null) {
+        if (this.cats == null) {
             return;
         }
-        catList.remove(superCat);
+        cats.remove(superCat);
         superCat.setCity(null);
     }
 }

@@ -9,11 +9,11 @@
 <p th:text="${'Население: ' + city.getPopulation()}"></p>
 <br>
 
-<div th:unless="${city.getCatList().isEmpty()}">
+<div th:unless="${city.getCats().isEmpty()}">
     <a th:text="${'Список котов защитников этого города'}" th:href="@{/cities/defense/{id}(id=${city.getId()})}"></a>
 </div>
 
-<div th:if="${city.getCatList().isEmpty()}">
+<div th:if="${city.getCats().isEmpty()}">
     <label>Город никто не защищает</label>
 </div>
 

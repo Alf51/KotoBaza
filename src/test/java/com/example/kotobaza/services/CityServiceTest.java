@@ -3,7 +3,7 @@ package com.example.kotobaza.services;
 import com.example.kotobaza.modeles.City;
 import com.example.kotobaza.modeles.SuperCat;
 import com.example.kotobaza.repository.CityRepository;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith({MockitoExtension.class})
 class CityServiceTest {
@@ -26,38 +26,38 @@ class CityServiceTest {
     @InjectMocks
     private CityService cityService;
 
-    @Test
-    @DisplayName("должен добавить кота в конкретный город")
-    void assignSuperCat_shouldAddSuperCatInCity() {
-        Long catId = 1L;
-        Long cityId = 1L;
-        SuperCat superCat = getSuperCat();
-        City city = getCity();
+    private static SuperCat cat;
 
-        Mockito.when(catService.getSuperCatId(catId)).thenReturn(superCat);
-        Mockito.when(cityRepository.findById(cityId)).thenReturn(Optional.of(city));
+    private static City city;
 
-        cityService.assignSuperCat(catId, cityId);
+    @BeforeAll
+    static void initData() {
+        cat = new SuperCat();
+        cat.setId(1L);
+        cat.setAge(3);
+        cat.setSuperName("Кошачий глаз");
+        cat.setName("Брасик");
 
-        SuperCat assignedSuperCat = city.getCatList().get(0);
-
-        assertEquals(superCat, assignedSuperCat);
-    }
-
-    private SuperCat getSuperCat() {
-        SuperCat superCat = new SuperCat();
-        superCat.setId(1L);
-        superCat.setAge(3);
-        superCat.setSuperName("Кошачий глаз");
-        superCat.setName("Брасик");
-        return superCat;
-    }
-
-    private City getCity() {
-        City city = new City();
+        city = new City();
         city.setId(1L);
         city.setName("Котоярск");
         city.setPopulation(2000);
-        return city;
+    }
+
+    @Test
+    void whenAssignSuperCatThenCityHaveCat() {
+        Mockito.when(catService.getSuperCatId(1L)).thenReturn(cat);
+        Mockito.when(cityRepository.findById(1L)).thenReturn(Optional.of(city));
+
+        cityService.assignSuperCat(cat.getId(), city.getId());
+        var assignedSuperCat = city.getCats();
+
+        assertThat(assignedSuperCat).contains(cat);
+        assertThat(assignedSuperCat.get(0)).isEqualTo(cat);
+    }
+
+    @Test
+    void whenAssignSuperCatThenCityHaveNotCat() {
+        // TODO
     }
 }
