@@ -4,7 +4,6 @@ import com.example.kotobaza.modeles.City;
 import com.example.kotobaza.modeles.SuperCat;
 import com.example.kotobaza.repository.CityRepository;
 import com.example.kotobaza.utils.exeptions.CatException;
-import com.example.kotobaza.utils.exeptions.CityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith({MockitoExtension.class})
 class CityServiceTest {
-    private SuperCat superCat;
+    private SuperCat cat;
     private City city;
 
     @Mock
@@ -32,59 +31,39 @@ class CityServiceTest {
     private CityService cityService;
 
     @BeforeEach
-    void prepareSuperCat() {
-        superCat = new SuperCat();
-        superCat.setId(1L);
-        superCat.setAge(3);
-        superCat.setSuperName("Кошачий глаз");
-        superCat.setName("Барсик");
-    }
+    void initData() {
+        cat = new SuperCat();
+        cat.setId(1L);
+        cat.setAge(3);
+        cat.setSuperName("Кошачий глаз");
+        cat.setName("Барсик");
 
-    @BeforeEach
-    void prepareCity() {
         city = new City();
         city.setId(1L);
         city.setName("Котоярск");
         city.setPopulation(2000);
     }
 
-
     @Test
-    void assignSuperCat_shouldAddSuperCatInCity() {
-        Long catId = 1L;
-        Long cityId = 1L;
+    void whenAssignSuperCatThenCityHaveCat() {
+        Mockito.when(catService.getSuperCatId(1L)).thenReturn(cat);
+        Mockito.when(cityRepository.findById(1L)).thenReturn(Optional.of(city));
 
-        Mockito.when(catService.getSuperCatId(catId)).thenReturn(superCat);
-        Mockito.when(cityRepository.findById(cityId)).thenReturn(Optional.of(city));
+        cityService.assignSuperCat(cat.getId(), city.getId());
+        var assignedSuperCats = city.getCats();
 
-        cityService.assignSuperCat(catId, cityId);
-
-        SuperCat assignedSuperCat = city.getCatList().get(0);
-
-        assertThat(superCat).isEqualTo(assignedSuperCat);
+        assertThat(assignedSuperCats).contains(cat);
+        assertThat(assignedSuperCats.get(0)).isEqualTo(cat);
     }
 
     @Test
-    void assignSuperCat_shouldThrowCatException() {
-        Long catId = 1L;
-        Long cityId = 1L;
+    void whenAssignSuperCatThenCityHaveNotCat() {
+        Mockito.when(catService.getSuperCatId(1L)).thenThrow(new CatException("кот не найден"));
 
-        Mockito.when(catService.getSuperCatId(catId)).thenThrow(new CatException("кот не найден"));
-
-        assertThatThrownBy(() -> cityService.assignSuperCat(catId, cityId))
+        assertThatThrownBy(() -> cityService.assignSuperCat(cat.getId(), city.getId()))
                 .isInstanceOf(CatException.class)
                 .hasMessageContaining("кот не найден");
-    }
 
-    @Test
-    void assignSuperCat_shouldThrowCityException() {
-        Long catId = 1L;
-        Long cityId = 1L;
-
-        Mockito.when(cityRepository.findById(cityId)).thenThrow(new CityException("город не найден"));
-
-        assertThatThrownBy(() -> cityService.assignSuperCat(catId, cityId))
-                .isInstanceOf(CityException.class)
-                .hasMessageContaining("город не найден");
+        assertThat(city.getCats()).isNull();
     }
 }

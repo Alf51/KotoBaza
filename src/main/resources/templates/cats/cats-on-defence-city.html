@@ -7,12 +7,12 @@
 
 
 <p th:text="${city.name + ', население: ' + city.getPopulation()}"></p>
-<div th:unless="${city.getCatList().isEmpty()}">
+<div th:unless="${city.getCats().isEmpty()}">
   <p>Эти храбрые супер-коты на защите города</p>
   <form th:method="PATCH" th:action="@{/cities/releaseСat/{cityId}(cityId=${city.getId()})}" th:object="${superCat}">
     <label for="superCat">Выберите кого освободить</label>
     <select th:object="${superCat}" th:field="*{id}" id="superCat">
-      <option th:each="superCat : ${city.getCatList()}" th:value="${superCat.getId()}"
+      <option th:each="superCat : ${city.getCats()}" th:value="${superCat.getId()}"
               th:text="${superCat.getSuperName()}"></option>
     </select>
     <input type="submit" value="Освободить от службы"/>
